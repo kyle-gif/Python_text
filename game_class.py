@@ -1,17 +1,27 @@
+import enum
 import time
+import os
+import platform
+import sys
 from skill import SKILL
+import enum
+
+class PlayerStat(enum.Enum):
+    hp = 100
+    mp = 100
+    power = 1.0
+    magic_power = 1.2
 
 
 class Player:
-    def __init__(self, name, skill=None):
+    def __init__(self, name, playerstat = PlayerStat):
         self.name = name
-        self.hp = 100
-        self.current_hp = 100
-        self.mp = 100
-        self.current_mp = 100
-        self.power = 1.0
-        self.magic_power = 1.2
-        self.currentSkill = skill
+        self.hp = playerstat.hp.value
+        self.current_hp = self.hp
+        self.mp = playerstat.mp.value
+        self.current_mp = self.mp
+        self.power = playerstat.power.value
+        self.magic_power = playerstat.magic_power.value
         print(f"\n{self.name}이(가) 생성 되었습니다.")
         print(f"\nHP: {self.hp}\nMP: {self.mp}\n힘: {self.power}\n마력: {self.magic_power}")
 
@@ -58,3 +68,5 @@ class Monster:
     def status(self):
         print(f"\n==={self.name}의 상태===\nHP: {self.current_hp} / {self.hp}")
         time.sleep(0.5)
+
+
