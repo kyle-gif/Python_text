@@ -1,93 +1,93 @@
-import enum
-import random
 import time
-from skill import SKILL
-from player import Player
-from classes import Monster
+from skill import SKILL, SKILL_CODE
+import game_class
+
 
 def player_turn():
-    while True:  # while문을 사용해 break를 걸 때 까지 계속 실행
+    while True:
         try:
             print("\n===공격 방식 선택===\n1. 물리 공격\n2. 마법 공격")
             player_skill_input = int(input("\n공격할 방식의 번호를 입력해주세요: "))
-            if player_skill_input == 0 or player_skill_input > 2:  # 1,2 외에 다른 숫자가 들어오면 다시 입력
+            if player_skill_input not in [1, 2]:
                 print("공격방식을 다시 입력해주세요")
-                continue  # while문을 처음부터 다시 시작함
+                continue
 
             if player_skill_input == 2:
                 if p1.current_mp < 5:
                     print("스킬을 사용하는데 필요한 MP가 모자랍니다.")
                     continue
-        except ValueError:  # ValueError가 나왔을때 execpt문 실행
+        except ValueError:
             print("공격방식을 숫자로 입력해주세요")
             continue
-
-        break  # while문을 빠져나옴
+        break
 
     print("\n===공격 대상 선택===")
-    for i, m in enumerate(monster_list):  # enumerate함수를 사용해 i는 순서를 m은 m1,m2와 같은 몬스터 변수를 입력
+    for i, m in enumerate(monster_list):
         print(f"{i + 1}. {m.name} (HP: {m.current_hp} / {m.hp})")
 
-    while True:  # while문을 사용해 break를 걸 때 까지 계속 실행
+    while True:
         try:
             player_target_input = int(input("\n공격할 대상의 번호를 입력해주세요: "))
-            if player_target_input <= 0 or player_target_input > len(monster_list):  # 0 또는 리스트의 갯수보다 더 많은 숫자 입력 시 다시 입력
+            if player_target_input <= 0 or player_target_input > len(monster_list):
                 print("잘못된 대상을 선택하셨습니다. 다시 선택해주세요.")
                 continue
-        except ValueError:  # ValueError가 나왔을때 execpt문 실행
+        except ValueError:
             print("대상 번호를 숫자로 입력해주세요.")
             continue
 
         break
 
-    if player_skill_input == 1:  # 공격방식의 번호 입력이 1(노말어택)이라면
-        Monster.Player.nomal_attack(p1, monster_list[player_target_input - 1])  # game_class 파일 Player 클래스의 nomal_attack함수 실행
-    elif player_skill_input == 2:  # 공격방식의 번호 입력이 2(매직어택)이라면
-        Monster.Player.magic_attack(p1, monster_list[player_target_input - 1])
+    if player_skill_input == 1:
+        p1.primary_attack(monster_list[player_target_input - 1])
+    elif player_skill_input == 2:
+        p1.magic_attack(monster_list[player_target_input - 1])
 
 
+def monster_turn():
+    for monster in monster_list:
+        monster.primary_attack(p1)
 
 
+def monster_death():
+    for m in monster_list[:]:
+        if m.current_hp <= 0:
+            monster_list.remove(m)
 
 
-p1 = Monster.Player(input("당신의 이름은 무엇입니까?: "))    # Player 클래스 __init__에서 많은 숫자가 랜덤으로 부여시켜서 name만 받음
-m1 = Monster.Monster("주황버섯", 15, 4)  # Monster 클래스 __init__에서 요구하는 (name, hp, power)
-m2 = Monster.Monster("초록버섯", 25, 5)
-m3 = Monster.Monster("파랑버섯", 35, 6)
+p1 = game_class.Player(input("당신의 이름은 무엇입니까?: "))
+m1 = game_class.Monster("잡몹 1", 15, 1)
+m2 = game_class.Monster("잡몹 2", 25, 1)
+m3 = game_class.Monster("잡몹 3", 35, 1)
 
-monster_list = [m1, m2, m3] # 몬스터 리스트
+monster_list = [m1, m2, m3]
 
-while True:  # break가 걸릴 때 까지 반복 실행
-    game_class.new_cmd()
-    print(f"\n====={turn}번째 턴====")  # f_string을 이용
-    time.sleep(0.3)  # 텍스트가 한번에 입력되는 것을 방지함, 좀 더 게임처럼 즐길 수 있음
-    p1.status()  # p1 = 플레이어, 플레이어의 상태를 보여주는 status함수를 사용
+turn = 1
+
+while True:
+    print(f"\n====={turn}번째 턴====")
     time.sleep(0.3)
-    for m in monster_list:  # 몬스터 리스트에 있는 몬스터들을 m이라는 변수에 순차 저장
-        m.status()  # m에 m1,m2,m3 순서로 들어오고 status함수 사용, 몬스터가 죽으면 리스트에서 삭제되기에 m2가 죽으면, m1,m3가 순차적으로 들어옴
+    p1.status()
+    time.sleep(0.3)
+    for m in monster_list:
+        m.status()
         time.sleep(0.3)
 
     print("\n===플레이어 턴===")
-    player_turn()  # 플레이어 행동함수 실행
-    monster_death()  # 몬스터 리스트 제거 함수 실행
+    player_turn()
+    monster_death()
 
-    if monster_list == []:  # 몬스터가 모두 죽어서 리스트가 비어버렸다면
+    if not monster_list:
         print("\n====clear!====\n당신이 승리했습니다.")
-        break  # 반복문 종료
+        break
 
     print("\n===몬스터 턴===")
     time.sleep(0.3)
-    monster_turn()  # 몬스터 행동함수 실행
+    monster_turn()
 
-    if p1.current_hp <= 0:  # 플레이어의 체력이 0보다 같거나 작다면
+    if p1.current_hp <= 0:
         print("\n당신이 사망하였습니다.\n ====게임 오버====")
-        break  # 반복문 종료
+        break
 
-    turn += 1  # 턴 + 1
-    print("\n====턴 종료====")  # 위의 break에 걸리지 않았다면 다시 반복문으로 돌아감
+    turn += 1
+    print("\n====턴 종료====")
     time.sleep(0.3)
-
-
-
-
-
