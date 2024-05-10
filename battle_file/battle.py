@@ -1,5 +1,4 @@
 import time
-from skill import SKILL, SKILL_CODE
 import game_class
 import random
 import sys
@@ -65,9 +64,9 @@ def monster_death():
 
 
 p1 = game_class.Player(input("당신의 이름은 무엇입니까?: "))
-m1 = game_class.Monster("잡몹 1", random.randint(10, 50), random.randint(10,50))
-m2 = game_class.Monster("잡몹 2", random.randint(10, 50), random.randint(10,50))
-m3 = game_class.Monster("잡몹 3", random.randint(10, 50), random.randint(10,50))
+m1 = game_class.Monster("잡몹 1", random.randint(1000, 5000), random.randint(1, 6))
+m2 = game_class.Monster("잡몹 2", random.randint(1000, 5000), random.randint(1, 6))
+m3 = game_class.Monster("잡몹 3", random.randint(1000, 5000), random.randint(1, 6))
 
 monster_list = [m1, m2, m3]
 

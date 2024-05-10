@@ -8,10 +8,10 @@ import enum
 
 
 class PlayerStat(enum.Enum):
-    hp = 100
+    hp = 1000
     mp = 100
-    power = 1.0
-    magic_power = 1.2
+    power = 10
+    magic_power = 12
 
 
 class Player:
@@ -27,7 +27,7 @@ class Player:
         print(f"\nHP: {self.hp}\nMP: {self.mp}\n힘: {self.power}\n마력: {self.magic_power}")
 
     def primary_attack(self, enemy):
-        damage = 5 * self.power
+        damage = 50 * self.power
         enemy.current_hp -= damage
         print(f"{self.name}의 공격! {enemy.name}에게 {damage}의 물리 데미지를 입혔습니다.")
         time.sleep(0.5)
@@ -36,7 +36,7 @@ class Player:
             time.sleep(0.5)
 
     def magic_attack(self, enemy):
-        damage = 7 * self.magic_power
+        damage = 70 * self.magic_power
         enemy.current_hp -= damage
         self.current_mp -= 5
         print(f"{self.name}의 공격! {enemy.name}에게 {damage}의 마법 데미지를 입혔습니다.")
@@ -58,7 +58,7 @@ class Monster:
         self.power = power
 
     def primary_attack(self, enemy):
-        damage = 3 * self.power
+        damage = 15 * self.power
         enemy.current_hp -= damage
         print(f"{self.name}의 공격! {enemy.name}에게 {damage}의 물리 데미지를 입혔습니다.")
         time.sleep(0.5)
