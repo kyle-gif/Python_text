@@ -1,5 +1,5 @@
+import enum
 import battle_file
 import random
 
-class home:
-    def __init__(self):
+class item(enum.Enum):

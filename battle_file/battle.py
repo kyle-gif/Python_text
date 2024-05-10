@@ -9,9 +9,9 @@ def player_turn(behv):
         while True:
             try:
                 print("\n===공격 방식 선택===\n1. 물리 공격\n2. 마법 공격")
-                player_skill_input = int(input("\n공격할 방식의 번호를 입력해주세요: "))
+                player_skill_input = int(input("\n공격할 방식을 선택해주세요: "))
                 if player_skill_input not in [1, 2]:
-                    print("공격방식을 다시 입력해주세요")
+                    print("공격방식을 다시 선택해주세요")
                     continue
 
                 if player_skill_input == 2:
@@ -19,7 +19,7 @@ def player_turn(behv):
                         print("스킬을 사용하는데 필요한 MP가 모자랍니다.")
                         continue
             except ValueError:
-                print("공격방식을 숫자로 입력해주세요")
+                print("공격방식을 제대로 입력해주세요")
                 continue
             break
 
@@ -29,7 +29,7 @@ def player_turn(behv):
 
         while True:
             try:
-                player_target_input = int(input("\n공격할 대상의 번호를 입력해주세요: "))
+                player_target_input = int(input("\n공격할 대상을 선택해주세요: "))
                 if player_target_input <= 0 or player_target_input > len(monster_list):
                     print("잘못된 대상을 선택하셨습니다. 다시 선택해주세요.")
                     continue
@@ -63,7 +63,7 @@ def monster_death():
             monster_list.remove(m)
 
 
-p1 = game_class.Player(input("당신의 이름은 무엇입니까?: "))
+p1 = game_class.Player(input("이름을 정해주세요: "))
 m1 = game_class.Monster("잡몹 1", random.randint(1000, 5000), random.randint(1, 6))
 m2 = game_class.Monster("잡몹 2", random.randint(1000, 5000), random.randint(1, 6))
 m3 = game_class.Monster("잡몹 3", random.randint(1000, 5000), random.randint(1, 6))
@@ -73,7 +73,7 @@ monster_list = [m1, m2, m3]
 turn = 1
 
 while True:
-    input("\nENTER 키를 눌러 다음으로 진행하세요")
+    input("\nENTER 키를 눌러주세요")
     print(f"\n====={turn}번째 턴====")
     time.sleep(0.3)
     p1.status()
@@ -82,12 +82,12 @@ while True:
         m.status()
         time.sleep(0.3)
 
-    print("\n===플레이어 턴===")
+    print("\n===당신의 턴===")
     while True:
         try:
             behv = int(input("\n할 행동을 정해주세요.\n1. 공격\n2. 도망치기\n"))
             if behv not in [1, 2]:
-                print("잘못된 선택입니다. 다시 선택해주세요.")
+                print("잘못된 선택입니다. 다시 정해주세요.")
                 continue
         except ValueError:
             print("숫자를 입력해주세요.")
@@ -98,15 +98,15 @@ while True:
     monster_death()
 
     if not monster_list:
-        print("\n====clear!====\n당신이 승리했습니다.")
+        print("\n====clear!====\n승리했습니다!")
         break
 
-    print("\n===몬스터 턴===")
+    print("\n===상대 턴===")
     time.sleep(0.3)
     monster_turn()
 
     if p1.current_hp <= 0:
-        print("\n당신이 사망하였습니다.\n ====게임 오버====")
+        print("\n사망하였습니다.\n ====게임 오버====")
         break
 
     turn += 1
