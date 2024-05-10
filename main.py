@@ -49,6 +49,8 @@ def player_turn(behv):
         if runrate > 60:
             print("\n도망치는데 성공했다! 하남자ㅋㅋ")
             sys.exit()
+        else:
+            print("\n되겠냐고 ㅋㅋ")
 
 
 def monster_turn():
@@ -63,9 +65,9 @@ def monster_death():
 
 
 p1 = game_class.Player(input("당신의 이름은 무엇입니까?: "))
-m1 = game_class.Monster("잡몹 1", 15, 1)
-m2 = game_class.Monster("잡몹 2", 25, 1)
-m3 = game_class.Monster("잡몹 3", 35, 1)
+m1 = game_class.Monster("잡몹 1", random.randint(10, 50), 0.5+round(random.random(),1))
+m2 = game_class.Monster("잡몹 2", random.randint(10, 50), 0.5+round(random.random(),1))
+m3 = game_class.Monster("잡몹 3", random.randint(10, 50), 0.5+round(random.random(),1))
 
 monster_list = [m1, m2, m3]
 
@@ -82,7 +84,7 @@ while True:
         time.sleep(0.3)
 
     print("\n===플레이어 턴===")
-    behv = input("\n할 행동을 정해주세요.\n1. 공격\n2. 도망치기")
+    behv = int(input("\n할 행동을 정해주세요.\n1. 공격\n2. 도망치기\n"))
     player_turn(behv)
     monster_death()
 
