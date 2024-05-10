@@ -65,9 +65,9 @@ def monster_death():
 
 
 p1 = game_class.Player(input("당신의 이름은 무엇입니까?: "))
-m1 = game_class.Monster("잡몹 1", random.randint(10, 50), 0.5+round(random.random(),1))
-m2 = game_class.Monster("잡몹 2", random.randint(10, 50), 0.5+round(random.random(),1))
-m3 = game_class.Monster("잡몹 3", random.randint(10, 50), 0.5+round(random.random(),1))
+m1 = game_class.Monster("잡몹 1", random.randint(10, 50), random.randint(10,50))
+m2 = game_class.Monster("잡몹 2", random.randint(10, 50), random.randint(10,50))
+m3 = game_class.Monster("잡몹 3", random.randint(10, 50), random.randint(10,50))
 
 monster_list = [m1, m2, m3]
 
@@ -84,7 +84,17 @@ while True:
         time.sleep(0.3)
 
     print("\n===플레이어 턴===")
-    behv = int(input("\n할 행동을 정해주세요.\n1. 공격\n2. 도망치기\n"))
+    while True:
+        try:
+            behv = int(input("\n할 행동을 정해주세요.\n1. 공격\n2. 도망치기\n"))
+            if behv not in [1, 2]:
+                print("잘못된 선택입니다. 다시 선택해주세요.")
+                continue
+        except ValueError:
+            print("숫자를 입력해주세요.")
+            continue
+        break
+
     player_turn(behv)
     monster_death()
 

@@ -6,6 +6,7 @@ import sys
 from skill import SKILL
 import enum
 
+
 class PlayerStat(enum.Enum):
     hp = 100
     mp = 100
@@ -14,7 +15,7 @@ class PlayerStat(enum.Enum):
 
 
 class Player:
-    def __init__(self, name, playerstat = PlayerStat):
+    def __init__(self, name, playerstat=PlayerStat):
         self.name = name
         self.hp = playerstat.hp.value
         self.current_hp = self.hp
@@ -57,7 +58,7 @@ class Monster:
         self.power = power
 
     def primary_attack(self, enemy):
-        damage = 5 * self.power
+        damage = 3 * self.power
         enemy.current_hp -= damage
         print(f"{self.name}의 공격! {enemy.name}에게 {damage}의 물리 데미지를 입혔습니다.")
         time.sleep(0.5)
@@ -68,5 +69,3 @@ class Monster:
     def status(self):
         print(f"\n==={self.name}의 상태===\nHP: {self.current_hp} / {self.hp}")
         time.sleep(0.5)
-
-
