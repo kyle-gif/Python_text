@@ -1,6 +1,8 @@
 import time
 from skill import SKILL, SKILL_CODE
 import game_class
+import random
+import sys
 
 
 def player_turn(behv):
@@ -42,6 +44,12 @@ def player_turn(behv):
         elif player_skill_input == 2:
             p1.magic_attack(monster_list[player_target_input - 1])
 
+    elif behv == 2:
+        runrate = random.randint(0,100)
+        if runrate > 60:
+            print("\n도망치는데 성공했다! 하남자ㅋㅋ")
+            sys.exit()
+
 
 def monster_turn():
     for monster in monster_list:
@@ -74,7 +82,7 @@ while True:
         time.sleep(0.3)
 
     print("\n===플레이어 턴===")
-    behv = input("\n할 행동을 정해주세요.")
+    behv = input("\n할 행동을 정해주세요.\n1. 공격\n2. 도망치기")
     player_turn(behv)
     monster_death()
 
